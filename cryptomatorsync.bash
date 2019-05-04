@@ -1,6 +1,6 @@
 #!/bin/bash
-# for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; iclouddrivesync.bash $f sync;done
-# for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; iclouddrivesync.bash $f difference;done
+# for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; cryptomatorsync.bash $f sync;done
+# for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; cryptomatorsync.bash $f difference;done
 
 SOURCE_DIR="/Users/steve/Cryptomator/iCloudDrive"
 RSYNC_OPTS="--archive --hard-links --whole-file --one-file-system --checksum --verbose --delete"
