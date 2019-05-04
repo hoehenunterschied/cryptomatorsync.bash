@@ -2,14 +2,14 @@
 # for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; iclouddrivesync.bash $f sync;done
 # for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; iclouddrivesync.bash $f difference;done
 
-SOURCE_DIR="/Users/theuser/Cryptomator/iCloudDrive"
+SOURCE_DIR="/Users/steve/Cryptomator/iCloudDrive"
 RSYNC_OPTS="--archive --hard-links --whole-file --one-file-system --checksum --verbose --delete"
 DIFF_OPTS="--brief --recursive"
 
 n=0
-n=$(($n+1)); TARGET_NAME[n]="OneDrive";        TARGET_LIST[n]="/Users/theuser/Cryptomator/OneDrive";          CRYPTOMATOR_LIST[n]="YES";
-n=$(($n+1)); TARGET_NAME[n]="GoogleDrive";     TARGET_LIST[n]="/Users/theuser/Cryptomator/GoogleDrive";       CRYPTOMATOR_LIST[n]="YES";
-n=$(($n+1)); TARGET_NAME[n]="Dropbox";         TARGET_LIST[n]="/Users/theuser/Cryptomator/Dropbox";           CRYPTOMATOR_LIST[n]="YES";
+n=$(($n+1)); TARGET_NAME[n]="OneDrive";        TARGET_LIST[n]="/Users/steve/Cryptomator/OneDrive";          CRYPTOMATOR_LIST[n]="YES";
+n=$(($n+1)); TARGET_NAME[n]="GoogleDrive";     TARGET_LIST[n]="/Users/steve/Cryptomator/GoogleDrive";       CRYPTOMATOR_LIST[n]="YES";
+n=$(($n+1)); TARGET_NAME[n]="Dropbox";         TARGET_LIST[n]="/Users/steve/Cryptomator/Dropbox";           CRYPTOMATOR_LIST[n]="YES";
 n=$(($n+1)); TARGET_NAME[n]="iCloudDriveCopy"; TARGET_LIST[n]="/Volumes/TimeMachine/Media/iCloudDriveCopy"; CRYPTOMATOR_LIST[n]="NO";
 
 for m in `seq 1 $n`;do
