@@ -1,6 +1,6 @@
 #!/bin/bash
-# for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; cryptomatorsync.bash $f sync;done
-# for f in OneDrive GoogleDrive Dropbox iCloudDriveCopy; do echo -e "########################################\n###\n### $f\n###"; cryptomatorsync.bash $f difference;done
+# for f in OneDrive GoogleDrive AmazonDrive iCloudDriveCopy Dropbox; do echo -e "########################################\n###\n### $f\n###"; cryptomatorsync.bash $f sync;done
+# for f in OneDrive GoogleDrive AmazonDrive iCloudDriveCopy Dropbox; do echo -e "########################################\n###\n### $f\n###"; cryptomatorsync.bash $f difference;done
 
 SOURCE_DIR="/Users/steve/Cryptomator/iCloudDrive"
 RSYNC_OPTS="--archive --hard-links --whole-file --one-file-system --checksum --verbose --delete"
@@ -9,8 +9,9 @@ DIFF_OPTS="--brief --recursive"
 n=0
 n=$(($n+1)); TARGET_NAME[n]="OneDrive";        TARGET_LIST[n]="/Users/steve/Cryptomator/OneDrive";          CRYPTOMATOR_LIST[n]="YES";
 n=$(($n+1)); TARGET_NAME[n]="GoogleDrive";     TARGET_LIST[n]="/Users/steve/Cryptomator/GoogleDrive";       CRYPTOMATOR_LIST[n]="YES";
-n=$(($n+1)); TARGET_NAME[n]="Dropbox";         TARGET_LIST[n]="/Users/steve/Cryptomator/Dropbox";           CRYPTOMATOR_LIST[n]="YES";
+n=$(($n+1)); TARGET_NAME[n]="AmazonDrive";     TARGET_LIST[n]="/Users/steve/Cryptomator/AmazonDrive";       CRYPTOMATOR_LIST[n]="YES";
 n=$(($n+1)); TARGET_NAME[n]="iCloudDriveCopy"; TARGET_LIST[n]="/Volumes/TimeMachine/Media/iCloudDriveCopy"; CRYPTOMATOR_LIST[n]="NO";
+n=$(($n+1)); TARGET_NAME[n]="Dropbox";         TARGET_LIST[n]="/Users/steve/Cryptomator/Dropbox";           CRYPTOMATOR_LIST[n]="YES";
 
 for m in `seq 1 $n`;do
   if [[ $m == 1 ]]; then
@@ -46,27 +47,20 @@ dryrun()
   echo -e "####\n#### WARNING: This was a dry run\n####          nothing has been synced"
 }
 
-case "$1" in
-    ${TARGET_NAME[1]})
-      TARGET_DIR=${TARGET_LIST[1]};
-      IS_CRYPTOMATOR=${CRYPTOMATOR_LIST[1]};
-      ;;
-    ${TARGET_NAME[2]})
-      TARGET_DIR=${TARGET_LIST[2]};
-      IS_CRYPTOMATOR=${CRYPTOMATOR_LIST[2]};
-      ;;
-    ${TARGET_NAME[3]})
-      TARGET_DIR=${TARGET_LIST[3]};
-      IS_CRYPTOMATOR=${CRYPTOMATOR_LIST[3]};
-      ;;
-    ${TARGET_NAME[4]})
-      TARGET_DIR=${TARGET_LIST[4]};
-      IS_CRYPTOMATOR=${CRYPTOMATOR_LIST[4]};
-      ;;
-    *)
-      usage;
-      exit;
-esac
+# check if parameter matches a list entry
+for m in `seq 1 $n`;do
+  if [[ ${TARGET_NAME[$m]} == "$1" ]]; then
+    TARGET_DIR=${TARGET_LIST[$m]};
+    IS_CRYPTOMATOR=${CRYPTOMATOR_LIST[$m]};
+    break;
+  fi
+done
+# show usage and exit if there was no match
+if [ -z ${IS_CRYPTOMATOR+X} ]; then
+  usage;
+  exit;
+fi
+#echo "TARGET_DIR = \"$TARGET_DIR\", IS_CRYPTOMATOR = \"$IS_CRYPTOMATOR\""
 
 if ! mount | grep "${SOURCE_DIR}" > /dev/null 2>&1; then
     MUST_PRINT="YES"
@@ -108,4 +102,3 @@ case "$2" in
     *)
       dryrun;
 esac
-
